@@ -16,6 +16,17 @@ struct _DList
 	void *data;
 };
 
+static void _dlist_destroy(DList *pList)
+{
+    if(pList)
+    {
+        pList->next = NULL;
+        pList->prev = NULL;
+        free(pList);
+        pList = NULL;
+    }
+}
+
 static void _dlist_add(DList *new_list, DList *prev, DList *next)
 {
 	prev->next = new_list;
@@ -131,9 +142,9 @@ void dlist_destroy(DList *head)
 
 	tmp = head->next;
 	while(tmp != head) {
-		tmp1 = tmp;
-		free(tmp);
-		tmp = tmp1->next;
+		tmp1 = tmp->next;
+		_dlist_destroy(tmp);
+		tmp = tmp1;
 	}
 
 	dlist_destroy_lock(head);
@@ -310,8 +321,7 @@ Ret dlist_delete(DList *head, int index)
 	if(tp != NULL) {
 		tp->next->prev = tp->prev;
 		tp->prev->next = tp->next;
-		free(tp);
-		tp = NULL;
+		_dlist_destroy(tp);
 	}
 
 	dlist_unlock(head);

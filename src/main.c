@@ -9,6 +9,7 @@
 #endif
 
 #include "test.h"
+#include "PolynomialFitting.h"
 
 extern void philosopher_problem(void);
 
@@ -21,10 +22,11 @@ static void *pthread_test(void *arg)
 	test();
 	test_container();
 #if 0
-	test_pthread();
-#else 
+    test_pthread();
 	philosopher_problem();
 #endif
+
+    testfit();
 
 	return NULL;
 }
@@ -41,6 +43,7 @@ int main(void)
 		exit(1);
 	}
 	printf("main thread\n");
+
 	pthread_join(tid, &ret);
 	while(1);
 	

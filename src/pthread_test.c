@@ -19,7 +19,7 @@ static void *producer_thread(void *arg)
 	for(i = 0; i < 1000; i++) 
 		dlist_insert(dlist, 0, (void *)i);
 
-	sleep(1);
+	//sleep(1);
 	printf("prepend data to dlist \n");
 	
 	for(i = 0; i < 1000; i++) 

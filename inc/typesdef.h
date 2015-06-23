@@ -47,6 +47,13 @@ typedef unsigned int uint;
 typedef unsigned short ushort;
 typedef unsigned char uchar;
 
+#ifndef BOOL
+#define BOOL uchar
+
+#define TRUE  (1)
+#define FALSE (0)
+#endif
+
 
 #ifdef __cplusplus
 }
