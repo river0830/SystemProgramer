@@ -22,10 +22,10 @@ struct _RWLock;
 typedef struct _RWLock RWLock;
 
 RWLock *rwlock_create(Locker *wrlock, Locker*rdlock);
-Ret rwlock_rdlock(RWLock *this);
-Ret rwlock_wrlock(RWLock *this);
-Ret rwlock_unlock(RWLock *this);
-void rwlock_destroy(RWLock *this);
+Ret rwlock_rdlock(RWLock *me);
+Ret rwlock_wrlock(RWLock *me);
+Ret rwlock_unlock(RWLock *me);
+void rwlock_destroy(RWLock *me);
 
 #ifdef __cplusplus
 }

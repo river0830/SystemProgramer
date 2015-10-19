@@ -5,8 +5,8 @@
 
 struct _DArray {
 	void **data;
-	int alloc_size;		//DArray allocate size
-	int size;				//darray size
+    unsigned int alloc_size;		//DArray allocate size
+    unsigned int size;				//darray size
 };
 
 #define MIN_DARRAY_ALLOC_SIZE 10
@@ -75,7 +75,7 @@ void darray_destroy(DArray *me)
 
 Ret darray_delete(DArray *me, uint index)
 {
-	int i = 0;
+    uint i = 0;
 	
 	return_val_if_fail(me != NULL && index < me->size, RET_INVALID_PARAM);
 
@@ -131,7 +131,7 @@ Ret darray_prepend(DArray *me, void *data)
 	return darray_insert(me, 0, data);
 }	
 
-Ret darray_get_by_index(DArray *me, int index, void **data)
+Ret darray_get_by_index(DArray *me, uint index, void **data)
 {
 	return_val_if_fail(me != NULL && index < me->size, RET_INVALID_PARAM);
 
@@ -139,7 +139,7 @@ Ret darray_get_by_index(DArray *me, int index, void **data)
 	return RET_OK;
 }
 
-Ret darray_set_by_index(DArray *me, int index, void *data)
+Ret darray_set_by_index(DArray *me, uint index, void *data)
 {
 	return_val_if_fail(me != NULL && index < me->size, RET_INVALID_PARAM);
 
@@ -149,7 +149,7 @@ Ret darray_set_by_index(DArray *me, int index, void *data)
 
 int darray_find(DArray *me, DataCmpFunc cmp, void *usr_data)
 {
-	int i = 0;
+    uint i = 0;
 	
 	return_val_if_fail(me != NULL && cmp != NULL, -1);
 	for(i = 0; i < me->size; i++) 
@@ -161,7 +161,7 @@ int darray_find(DArray *me, DataCmpFunc cmp, void *usr_data)
 		
 Ret darray_foreach(DArray *me, DataVisitFunc visit, void *usr_data)
 {
-	int i = 0;
+    uint i = 0;
 	int ret = RET_OK;
 
 	return_val_if_fail(me!=NULL && visit!=NULL, RET_INVALID_PARAM);

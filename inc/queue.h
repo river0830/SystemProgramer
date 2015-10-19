@@ -24,12 +24,12 @@ struct _Queue;
 typedef struct _Queue Queue;
 
 Queue *queue_create(LContainer *container);
-Ret queue_head(Queue *this, void **data);
-Ret queue_push(Queue *this, void *data);
-Ret queue_pop(Queue *this);
-Ret queue_foreach(Queue *this, DataVisitFunc visit, void *data);
-int queue_length(Queue *this);
-void queue_destroy(Queue *this);
+Ret queue_head(Queue *me, void **data);
+Ret queue_push(Queue *me, void *data);
+Ret queue_pop(Queue *me);
+Ret queue_foreach(Queue *me, DataVisitFunc visit, void *data);
+int queue_length(Queue *me);
+void queue_destroy(Queue *me);
 
 
 #ifdef __cplusplus

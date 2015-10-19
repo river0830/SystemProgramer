@@ -44,8 +44,7 @@ int main(void)
 	}
 	printf("main thread\n");
 
-	pthread_join(tid, &ret);
-	while(1);
+    pthread_join(tid, &ret);
 	
 	return 0;
 }

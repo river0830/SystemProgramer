@@ -7,60 +7,60 @@ struct _Queue {
 
 Queue *queue_create(LContainer *container)
 {
-	Queue *this = NULL;
+    Queue *me = NULL;
 
 	return_val_if_fail(container != NULL, NULL);
 
-	this = (Queue *)malloc(sizeof(Queue));
-	if(this != NULL) {
-		this->lcontainer = container;
+    me = (Queue *)malloc(sizeof(Queue));
+    if(me != NULL) {
+        me->lcontainer = container;
 	}
 
-	return this;
+    return me;
 }
 
-Ret queue_head(Queue *this, void **data)
+Ret queue_head(Queue *me, void **data)
 {
-	return_val_if_fail(this != NULL, RET_INVALID_PARAM);
+    return_val_if_fail(me != NULL, RET_INVALID_PARAM);
 
-	return lcontainer_get_by_index(this->lcontainer, 0, data);
+    return lcontainer_get_by_index(me->lcontainer, 0, data);
 }
 
-Ret queue_pop(Queue *this)
+Ret queue_pop(Queue *me)
 {
-	return_val_if_fail(this != NULL, RET_INVALID_PARAM);
+    return_val_if_fail(me != NULL, RET_INVALID_PARAM);
 
-	return lcontainer_delete(this->lcontainer, 0);
+    return lcontainer_delete(me->lcontainer, 0);
 }
 
-Ret queue_push(Queue *this, void *data)
+Ret queue_push(Queue *me, void *data)
 {
-	return_val_if_fail(this != NULL, RET_INVALID_PARAM);
+    return_val_if_fail(me != NULL, RET_INVALID_PARAM);
 
-	return lcontainer_append(this->lcontainer, data);
+    return lcontainer_append(me->lcontainer, data);
 }
 
-Ret queue_foreach(Queue *this, DataVisitFunc visit, void *usr_data)
+Ret queue_foreach(Queue *me, DataVisitFunc visit, void *usr_data)
 {
-	return_val_if_fail(this != NULL && visit != NULL, RET_INVALID_PARAM);
+    return_val_if_fail(me != NULL && visit != NULL, RET_INVALID_PARAM);
 
-	return lcontainer_foreach(this->lcontainer, visit, usr_data);
+    return lcontainer_foreach(me->lcontainer, visit, usr_data);
 }
 
-int queue_length(Queue *this)
+int queue_length(Queue *me)
 {
-	return_val_if_fail(this != NULL, 0);
+    return_val_if_fail(me != NULL, 0);
 
-	return lcontainer_length(this->lcontainer);
+    return lcontainer_length(me->lcontainer);
 }
 
-void queue_destroy(Queue *this)
+void queue_destroy(Queue *me)
 {
-	if(this != NULL) {
-		lcontainer_destroy(this->lcontainer);
-		this->lcontainer = NULL;
-		free(this);
-		this = NULL;
+    if(me != NULL) {
+        lcontainer_destroy(me->lcontainer);
+        me->lcontainer = NULL;
+        free(me);
+        me = NULL;
 	}
 }
 

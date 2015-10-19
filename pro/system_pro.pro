@@ -8,6 +8,18 @@ TARGET = system_pro
 QMAKE_CXXFLAGS += -static  #×èÖ¹Á´½Ó¹²Ïí¿â
 QMAKE_CXXFLAGS += -Wshadow #¸²¸Ç¼ì²â
 
+CONFIG(debug, debug|release) {
+        DESTDIR += ../Debug
+        OBJECTS_DIR += ./DOut
+        OUTPUTPATH = Debug
+}
+
+CONFIG(release, debug|release) {
+        DESTDIR +=../Release
+        OBJECTS_DIR += ./ROut
+        OUTPUTPATH = Release
+}
+
 INCLUDEPATH = \
     ../inc/  \
 

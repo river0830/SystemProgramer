@@ -30,100 +30,100 @@ extern "C" {
 struct _LContainer;
 typedef struct _LContainer LContainer;
 
-typedef Ret (*LContainerInsert)(LContainer *this, uint index, void *data);
-typedef Ret (*LContainerAppend)(LContainer *this, void *data);
-typedef Ret (*LContainerPrepend)(LContainer *this, void *data);
-typedef int (*LContainerFind)(LContainer *this, DataCmpFunc cmp, void *usr_data);
-typedef Ret (*LContainerForeach)(LContainer *this, DataVisitFunc visit, void *usr_data);
-typedef Ret (*LContainerGetByIndex)(LContainer *this, int index, void **data);
-typedef Ret (*LContainerSetByIndex)(LContainer *this, int index, void *data);
-typedef Ret (*LContainerDelete)(LContainer *this, int index);
-typedef void (*LContainerDestroy)(LContainer *this);
-typedef int (*LContainerLength)(LContainer *this);
+typedef Ret (*LContainerInsert)(LContainer *me, uint index, void *data);
+typedef Ret (*LContainerAppend)(LContainer *me, void *data);
+typedef Ret (*LContainerPrepend)(LContainer *me, void *data);
+typedef int (*LContainerFind)(LContainer *me, DataCmpFunc cmp, void *usr_data);
+typedef Ret (*LContainerForeach)(LContainer *me, DataVisitFunc visit, void *usr_data);
+typedef Ret (*LContainerGetByIndex)(LContainer *me, int index, void **data);
+typedef Ret (*LContainerSetByIndex)(LContainer *me, int index, void *data);
+typedef Ret (*LContainerDelete)(LContainer *me, int index);
+typedef void (*LContainerDestroy)(LContainer *me);
+typedef int (*LContainerLength)(LContainer *me);
 
 struct _LContainer {
 	LContainerInsert 		insert;
 	LContainerAppend 		append;
 	LContainerPrepend 		prepend;
 	LContainerFind 			find;
-	LContainerForeach 		foreach;
+    LContainerForeach 		for_each;
 	LContainerGetByIndex 	get_by_index;
 	LContainerSetByIndex 	set_by_index;
-	LContainerDelete 		delete;
+    LContainerDelete 		cdelete;
 	LContainerDestroy 		destroy;
 	LContainerLength 		length;
 	
 	char priv[0];
 };
 
-static inline Ret lcontainer_insert(LContainer *this, uint index, void *data)
+static inline Ret lcontainer_insert(LContainer *me, uint index, void *data)
 {
-	return_val_if_fail(this != NULL && this->insert != NULL, RET_INVALID_PARAM);
+    return_val_if_fail(me != NULL && me->insert != NULL, RET_INVALID_PARAM);
 	
-	return this->insert(this, index, data);
+    return me->insert(me, index, data);
 }
 
-static inline Ret lcontainer_append(LContainer *this, void *data)
+static inline Ret lcontainer_append(LContainer *me, void *data)
 {
-	return_val_if_fail(this != NULL && this->append != NULL, RET_INVALID_PARAM);
+    return_val_if_fail(me != NULL && me->append != NULL, RET_INVALID_PARAM);
 	
-	return this->append(this, data);
+    return me->append(me, data);
 }
 
-static inline Ret lcontainer_prepend(LContainer *this, void *data)
+static inline Ret lcontainer_prepend(LContainer *me, void *data)
 {
-	return_val_if_fail(this != NULL && this->prepend != NULL, RET_INVALID_PARAM);
+    return_val_if_fail(me != NULL && me->prepend != NULL, RET_INVALID_PARAM);
 	
-	return this->prepend(this, data);
+    return me->prepend(me, data);
 }
 
-static inline int lcontainer_find(LContainer *this, DataCmpFunc cmp, void *usr_data)
+static inline int lcontainer_find(LContainer *me, DataCmpFunc cmp, void *usr_data)
 {
-	return_val_if_fail(this != NULL && this->find != NULL, -1);
+    return_val_if_fail(me != NULL && me->find != NULL, -1);
 	
-	return this->find(this, cmp, usr_data);
+    return me->find(me, cmp, usr_data);
 }
 
-static inline Ret lcontainer_foreach(LContainer *this, DataVisitFunc visit, void *usr_data)
+static inline Ret lcontainer_foreach(LContainer *me, DataVisitFunc visit, void *usr_data)
 {
-	return_val_if_fail(this != NULL && this->foreach != NULL, RET_INVALID_PARAM);
+    return_val_if_fail(me != NULL && me->for_each != NULL, RET_INVALID_PARAM);
 	
-	return this->foreach(this, visit, usr_data);
+    return me->for_each(me, visit, usr_data);
 }
 
-static inline Ret lcontainer_get_by_index(LContainer *this, int index, void **data)
+static inline Ret lcontainer_get_by_index(LContainer *me, int index, void **data)
 {
-	return_val_if_fail(this != NULL && this->get_by_index!= NULL, RET_INVALID_PARAM);
+    return_val_if_fail(me != NULL && me->get_by_index!= NULL, RET_INVALID_PARAM);
 	
-	return this->get_by_index(this, index, data);
+    return me->get_by_index(me, index, data);
 }
 
-static inline Ret lcontainer_set_by_index(LContainer *this, int index, void *data)
+static inline Ret lcontainer_set_by_index(LContainer *me, int index, void *data)
 {
-	return_val_if_fail(this != NULL && this->set_by_index!= NULL, RET_INVALID_PARAM);
+    return_val_if_fail(me != NULL && me->set_by_index!= NULL, RET_INVALID_PARAM);
 	
-	return this->set_by_index(this, index, data);
+    return me->set_by_index(me, index, data);
 }
 
-static inline Ret lcontainer_delete(LContainer *this, int index)
+static inline Ret lcontainer_delete(LContainer *me, int index)
 {
-	return_val_if_fail(this != NULL && this->delete!= NULL, RET_INVALID_PARAM);
+    return_val_if_fail(me != NULL && me->cdelete!= NULL, RET_INVALID_PARAM);
 	
-	return this->delete(this, index);
+    return me->cdelete(me, index);
 }
 
-static inline void lcontainer_destroy(LContainer *this)
+static inline void lcontainer_destroy(LContainer *me)
 {
-	return_if_fail(this != NULL && this->destroy != NULL);
+    return_if_fail(me != NULL && me->destroy != NULL);
 
-	return this->destroy(this);
+    return me->destroy(me);
 }
 
-static inline int lcontainer_length(LContainer *this)
+static inline int lcontainer_length(LContainer *me)
 {
-	return_val_if_fail(this != NULL && this->length != NULL, 0);
+    return_val_if_fail(me != NULL && me->length != NULL, 0);
 
-	return this->length(this);
+    return me->length(me);
 }
 
 #ifdef __cplusplus
