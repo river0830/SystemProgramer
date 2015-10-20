@@ -7,102 +7,102 @@ typedef struct _PrivInfo {
 	DArray *darray;
 }DarrayPrivInfo;
 
-static Ret lcontainer_darray_insert(LContainer *this, uint index, void *data)
+static Ret lcontainer_darray_insert(LContainer *me, uint index, void *data)
 {
-	DarrayPrivInfo *priv = (DarrayPrivInfo *)this->priv;
+    DarrayPrivInfo *priv = (DarrayPrivInfo *)me->priv;
 
 	return darray_insert(priv->darray, index, data);
 }
 
-static Ret lcontainer_darray_append(LContainer *this, void *data)
+static Ret lcontainer_darray_append(LContainer *me, void *data)
 {
-	DarrayPrivInfo *priv = (DarrayPrivInfo *)this->priv;
+    DarrayPrivInfo *priv = (DarrayPrivInfo *)me->priv;
 
 	return darray_append(priv->darray, data);
 }
 
-static Ret lcontainer_darray_prepend(LContainer *this, void *data)
+static Ret lcontainer_darray_prepend(LContainer *me, void *data)
 {
-	DarrayPrivInfo *priv = (DarrayPrivInfo *)this->priv;
+    DarrayPrivInfo *priv = (DarrayPrivInfo *)me->priv;
 
 	return darray_prepend(priv->darray, data);
 }
 
-static int lcontainer_darray_find(LContainer *this, DataCmpFunc cmp, void *usr_data)
+static int lcontainer_darray_find(LContainer *me, DataCmpFunc cmp, void *usr_data)
 {
-	DarrayPrivInfo *priv = (DarrayPrivInfo *)this->priv;
+    DarrayPrivInfo *priv = (DarrayPrivInfo *)me->priv;
 
 	return darray_find(priv->darray, cmp, usr_data);
 }
 
-static Ret lcontainer_darray_foreach(LContainer *this, DataVisitFunc visit, void *usr_data)
+static Ret lcontainer_darray_foreach(LContainer *me, DataVisitFunc visit, void *usr_data)
 {
-	DarrayPrivInfo *priv = (DarrayPrivInfo *)this->priv;
+    DarrayPrivInfo *priv = (DarrayPrivInfo *)me->priv;
 
 	return darray_foreach(priv->darray, visit, usr_data);
 }
 
-static Ret lcontainer_darray_get_by_index(LContainer *this, int index, void **data)
+static Ret lcontainer_darray_get_by_index(LContainer *me, int index, void **data)
 {
-	DarrayPrivInfo *priv = (DarrayPrivInfo *)this->priv;
+    DarrayPrivInfo *priv = (DarrayPrivInfo *)me->priv;
 
 	return darray_get_by_index(priv->darray, index, data);
 }
 
-static Ret lcontainer_darray_set_by_index(LContainer *this, int index, void *data)
+static Ret lcontainer_darray_set_by_index(LContainer *me, int index, void *data)
 {
-	DarrayPrivInfo *priv = (DarrayPrivInfo *)this->priv;
+    DarrayPrivInfo *priv = (DarrayPrivInfo *)me->priv;
 
 	return darray_set_by_index(priv->darray, index, data);
 }
 
-static Ret lcontainer_darray_delete(LContainer *this, int index)
+static Ret lcontainer_darray_delete(LContainer *me, int index)
 {
-	DarrayPrivInfo *priv = (DarrayPrivInfo *)this->priv;
+    DarrayPrivInfo *priv = (DarrayPrivInfo *)me->priv;
 
 	return darray_delete(priv->darray, index);
 }
 
-static void lcontainer_darray_destroy(LContainer * this)
+static void lcontainer_darray_destroy(LContainer * me)
 {
-	DarrayPrivInfo *priv = (DarrayPrivInfo *)this->priv;
+    DarrayPrivInfo *priv = (DarrayPrivInfo *)me->priv;
 
 	return darray_destroy(priv->darray);
 }
 
-static int lcontainer_darray_length(LContainer *this)
+static int lcontainer_darray_length(LContainer *me)
 {
-	DarrayPrivInfo *priv = (DarrayPrivInfo *)this->priv;
+    DarrayPrivInfo *priv = (DarrayPrivInfo *)me->priv;
 
 	return darray_length(priv->darray);
 }
 
 LContainer *lcontainer_darray_create(void)
 {
-	LContainer *this = NULL;
+    LContainer *me = NULL;
 
-	this = (LContainer *)malloc(sizeof(LContainer) + sizeof(DarrayPrivInfo));
-	if(this != 	NULL) {
-		DarrayPrivInfo *priv = (DarrayPrivInfo *)this->priv;
+    me = (LContainer *)malloc(sizeof(LContainer) + sizeof(DarrayPrivInfo));
+    if(me != 	NULL) {
+        DarrayPrivInfo *priv = (DarrayPrivInfo *)me->priv;
 		
-		this->insert 	= lcontainer_darray_insert;
-		this->append 	= lcontainer_darray_append;
-		this->prepend 	= lcontainer_darray_prepend;
-		this->find 		= lcontainer_darray_find;
-		this->foreach	= lcontainer_darray_foreach;
-		this->get_by_index = lcontainer_darray_get_by_index;
-		this->set_by_index = lcontainer_darray_set_by_index;
-		this->delete	= lcontainer_darray_delete;
-		this->destroy	= lcontainer_darray_destroy;
-		this->length	= lcontainer_darray_length;
+        me->insert 	     = lcontainer_darray_insert;
+        me->append 	     = lcontainer_darray_append;
+        me->prepend 	 = lcontainer_darray_prepend;
+        me->find 		 = lcontainer_darray_find;
+        me->for_each	 = lcontainer_darray_foreach;
+        me->get_by_index = lcontainer_darray_get_by_index;
+        me->set_by_index = lcontainer_darray_set_by_index;
+        me->cdelete	     = lcontainer_darray_delete;
+        me->destroy	     = lcontainer_darray_destroy;
+        me->length	     = lcontainer_darray_length;
 
 		priv->darray = darray_create();
 		if(priv->darray == NULL) {
-			free(this);
-			this = NULL;
+            free(me);
+            me = NULL;
 		}
 	}
 
-	return this;
+    return me;
 }
 
